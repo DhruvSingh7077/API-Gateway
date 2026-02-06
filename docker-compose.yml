@@ -1,0 +1,45 @@
+version: '3.8'
+
+services:
+  postgres:
+    image: postgres:16-alpine
+    container_name: api-gateway-postgres
+    environment:
+      POSTGRES_DB: ${POSTGRES_DB:-api_gateway}
+      POSTGRES_USER: ${POSTGRES_USER:-gateway_user}
+      POSTGRES_PASSWORD: ${POSTGRES_PASSWORD:-gateway_password}
+    ports:
+      - "5432:5432"
+    volumes:
+      - postgres-data:/var/lib/postgresql/data
+      - ./docker/init-db.sql:/docker-entrypoint-initdb.d/init.sql
+    networks:
+      - api-gateway-network
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U gateway_user -d api_gateway"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+
+  redis:
+    image: redis:7-alpine
+    container_name: api-gateway-redis
+    ports:
+      - "6379:6379"
+    volumes:
+      - redis-data:/data
+    networks:
+      - api-gateway-network
+    healthcheck:
+      test: ["CMD", "redis-cli", "ping"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+
+volumes:
+  postgres-data:
+  redis-data:
+
+networks:
+  api-gateway-network:
+    driver: bridge
