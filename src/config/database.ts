@@ -5,6 +5,9 @@ import { Pool, QueryResult, QueryResultRow } from 'pg';
 import { config } from './environment';
 
 // Create connection pool
+
+console.log("DB CONFIG USED BY NODE:", config.postgres);
+
 export const pool = new Pool({
   host: config.postgres.host,
   port: config.postgres.port,

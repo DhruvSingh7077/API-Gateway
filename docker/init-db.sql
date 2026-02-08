@@ -83,4 +83,3 @@ DO $$
 BEGIN
     RAISE NOTICE 'Database initialization completed successfully!';
 END $$;
-```

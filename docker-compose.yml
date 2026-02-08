@@ -8,6 +8,7 @@ services:
       POSTGRES_DB: ${POSTGRES_DB:-api_gateway}
       POSTGRES_USER: ${POSTGRES_USER:-gateway_user}
       POSTGRES_PASSWORD: ${POSTGRES_PASSWORD:-gateway_password}
+    command: postgres -c listen_addresses='*'
     ports:
       - "5432:5432"
     volumes:

@@ -6,6 +6,12 @@ import dotenv from 'dotenv';
 // Load .env file
 dotenv.config();
 
+// DEBUG: Print what we loaded
+console.log('DEBUG - Environment variables loaded:');
+console.log('POSTGRES_PASSWORD:', process.env.POSTGRES_PASSWORD);
+console.log('POSTGRES_USER:', process.env.POSTGRES_USER);
+console.log('---');
+
 interface Config {
   // Server
   port: number;
@@ -97,12 +103,12 @@ export const config: Config = {
   redis: {
     host: getEnvVar('REDIS_HOST', 'localhost'),
     port: getEnvNumber('REDIS_PORT', 6379),
-    password: getEnvVar('REDIS_PASSWORD', ''),
+    password: process.env.REDIS_PASSWORD || '',
   },
   
   backends: {
-    openai: getEnvVar('OPENAI_API_KEY', ''),
-    anthropic: getEnvVar('ANTHROPIC_API_KEY', ''),
+    openai: process.env.OPENAI_API_KEY || '',
+    anthropic: process.env.ANTHROPIC_API_KEY || '',
   },
   
   dashboard: {
