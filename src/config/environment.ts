@@ -39,6 +39,9 @@ interface Config {
     anthropic: string;
   };
   
+  // Mock backend for testing without real API keys
+  mockBackend: boolean;
+  
   // Dashboard
   dashboard: {
     port: number;
@@ -110,6 +113,8 @@ export const config: Config = {
     openai: process.env.OPENAI_API_KEY || '',
     anthropic: process.env.ANTHROPIC_API_KEY || '',
   },
+  
+  mockBackend: getEnvBoolean('MOCK_BACKEND', true),
   
   dashboard: {
     port: getEnvNumber('DASHBOARD_PORT', 3001),

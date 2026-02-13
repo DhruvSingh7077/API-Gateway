@@ -4,6 +4,7 @@
 import fetch from 'node-fetch';
 import { config } from '../config/environment';
 import { logger } from '../utils/logger';
+import { getMockResponse } from './mockBackend';
 
 export interface ProxyRequest {
   backend: 'openai' | 'anthropic';
@@ -89,6 +90,31 @@ export async function forwardRequest(request: ProxyRequest): Promise<ProxyRespon
   const startTime = Date.now();
   
   try {
+    // Check if mock backend is enabled
+    if (config.mockBackend) {
+      logger.info('Using mock backend response', {
+        backend: request.backend,
+        endpoint: request.endpoint,
+      });
+      
+      const mockResult = getMockResponse(
+        request.backend,
+        request.endpoint,
+        request.method,
+        request.body
+      );
+      
+      const responseTimeMs = Date.now() - startTime;
+      
+      return {
+        statusCode: mockResult.statusCode,
+        headers: mockResult.headers,
+        body: mockResult.body,
+        responseTimeMs,
+      };
+    }
+    
+    // Real backend request
     const baseUrl = getBackendUrl(request.backend);
     const url = `${baseUrl}${request.endpoint}`;
     const headers = prepareHeaders(request.backend, request.headers);
