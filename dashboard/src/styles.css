@@ -1,0 +1,264 @@
+:root {
+  color-scheme: light;
+  --bg: #0f172a;
+  --bg-soft: #111c38;
+  --card: #fef7ec;
+  --card-strong: #fff0da;
+  --ink: #0b0f17;
+  --ink-soft: #314061;
+  --accent: #f97316;
+  --accent-2: #f59e0b;
+  --chip: #e0f2fe;
+  --chip-text: #0f172a;
+  --stroke: rgba(15, 23, 42, 0.12);
+  --shadow: 0 24px 60px rgba(15, 23, 42, 0.24);
+}
+
+* {
+  box-sizing: border-box;
+}
+
+body {
+  margin: 0;
+  font-family: 'Space Grotesk', system-ui, sans-serif;
+  background: radial-gradient(circle at top left, #1e293b 0%, #0b1120 55%, #04070f 100%);
+  color: #f8fafc;
+  min-height: 100vh;
+}
+
+.page {
+  max-width: 1100px;
+  margin: 0 auto;
+  padding: 48px 24px 80px;
+  display: flex;
+  flex-direction: column;
+  gap: 28px;
+}
+
+.hero {
+  display: grid;
+  grid-template-columns: minmax(0, 1.2fr) minmax(0, 0.8fr);
+  gap: 24px;
+  align-items: stretch;
+}
+
+.eyebrow {
+  text-transform: uppercase;
+  letter-spacing: 0.3em;
+  font-size: 0.72rem;
+  color: #94a3b8;
+  margin: 0 0 12px;
+}
+
+h1 {
+  font-size: clamp(2.2rem, 3vw, 3.2rem);
+  margin: 0 0 12px;
+}
+
+.subhead {
+  color: #cbd5f5;
+  line-height: 1.5;
+  max-width: 520px;
+}
+
+.hero-panel {
+  background: linear-gradient(135deg, #fef3c7, #fde68a);
+  color: var(--ink);
+  border-radius: 24px;
+  padding: 24px;
+  box-shadow: var(--shadow);
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.panel-title {
+  font-size: 0.9rem;
+  text-transform: uppercase;
+  letter-spacing: 0.2em;
+}
+
+.panel-value {
+  font-size: 2.5rem;
+  font-weight: 700;
+}
+
+.panel-caption {
+  color: #7c2d12;
+}
+
+.panel-grid {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 12px;
+  background: rgba(255, 255, 255, 0.4);
+  padding: 12px;
+  border-radius: 16px;
+}
+
+.panel-grid span {
+  display: block;
+  font-size: 0.75rem;
+  color: #7c2d12;
+}
+
+.panel-grid strong {
+  font-size: 1.1rem;
+}
+
+.chip-row {
+  display: flex;
+  gap: 10px;
+  flex-wrap: wrap;
+}
+
+.chip {
+  padding: 6px 12px;
+  border-radius: 999px;
+  background: var(--chip);
+  color: var(--chip-text);
+  font-size: 0.75rem;
+  font-weight: 600;
+}
+
+.stats {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+  gap: 16px;
+}
+
+.stat-card {
+  background: var(--card);
+  color: var(--ink);
+  padding: 18px;
+  border-radius: 18px;
+  box-shadow: var(--shadow);
+}
+
+.stat-card h2 {
+  margin: 10px 0 6px;
+  font-size: 1.8rem;
+}
+
+.delta {
+  font-size: 0.8rem;
+  color: #475569;
+}
+
+.delta.up {
+  color: #16a34a;
+}
+
+.delta.down {
+  color: #dc2626;
+}
+
+.grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+  gap: 16px;
+}
+
+.card {
+  background: var(--card-strong);
+  color: var(--ink);
+  border-radius: 20px;
+  padding: 20px;
+  box-shadow: var(--shadow);
+}
+
+.wide {
+  background: #0f172a;
+  color: #f8fafc;
+  border: 1px solid rgba(148, 163, 184, 0.2);
+}
+
+.card-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 12px;
+  margin-bottom: 16px;
+}
+
+.ghost {
+  border: 1px solid var(--stroke);
+  background: transparent;
+  padding: 6px 12px;
+  border-radius: 999px;
+  font-size: 0.75rem;
+  cursor: pointer;
+}
+
+.bars {
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+}
+
+.bar {
+  display: grid;
+  grid-template-columns: 1.4fr 2fr 0.6fr;
+  gap: 12px;
+  align-items: center;
+}
+
+.track {
+  height: 10px;
+  background: rgba(15, 23, 42, 0.08);
+  border-radius: 999px;
+  overflow: hidden;
+}
+
+.fill {
+  height: 100%;
+  background: linear-gradient(90deg, var(--accent), var(--accent-2));
+  border-radius: 999px;
+}
+
+.table {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.row {
+  display: grid;
+  grid-template-columns: 1.6fr 0.6fr 0.6fr;
+  gap: 12px;
+  padding: 8px 0;
+  border-bottom: 1px solid rgba(15, 23, 42, 0.08);
+}
+
+.row.header {
+  font-size: 0.75rem;
+  text-transform: uppercase;
+  letter-spacing: 0.15em;
+  color: #64748b;
+  border-bottom: 1px solid rgba(15, 23, 42, 0.18);
+}
+
+.mono {
+  font-family: 'Spline Sans Mono', ui-monospace, SFMono-Regular, monospace;
+}
+
+.overview {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(160px, 1fr));
+  gap: 14px;
+}
+
+.overview p {
+  margin: 0 0 8px;
+  color: #cbd5f5;
+}
+
+.overview strong {
+  font-size: 1.4rem;
+}
+
+@media (max-width: 900px) {
+  .hero {
+    grid-template-columns: 1fr;
+  }
+}
