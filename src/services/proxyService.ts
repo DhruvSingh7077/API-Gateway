@@ -190,14 +190,14 @@ export async function forwardRequest(request: ProxyRequest): Promise<ProxyRespon
  * Detect which backend to use based on endpoint
  */
 export function detectBackend(endpoint: string): 'openai' | 'anthropic' | null {
-  // OpenAI endpoints
-  if (endpoint.startsWith('/v1/') || endpoint.startsWith('/openai/')) {
-    return 'openai';
-  }
-  
   // Anthropic endpoints
   if (endpoint.startsWith('/v1/messages') || endpoint.startsWith('/anthropic/')) {
     return 'anthropic';
+  }
+  
+  // OpenAI endpoints
+  if (endpoint.startsWith('/v1/') || endpoint.startsWith('/openai/')) {
+    return 'openai';
   }
   
   // Default to OpenAI for common endpoints

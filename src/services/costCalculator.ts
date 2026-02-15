@@ -33,34 +33,6 @@ export function detectAIResponse(responseBody: any): CostCalculation {
       };
     }
 
-    // OpenAI Response Pattern
-    if (responseBody.usage && responseBody.model) {
-      const usage: TokenUsage = {
-        promptTokens: responseBody.usage.prompt_tokens || 0,
-        completionTokens: responseBody.usage.completion_tokens || 0,
-        totalTokens: responseBody.usage.total_tokens || 0,
-      };
-
-      const cost = calculateCost(
-        responseBody.model,
-        usage.promptTokens,
-        usage.completionTokens
-      );
-
-      logger.debug('OpenAI response detected', {
-        model: responseBody.model,
-        tokens: usage.totalTokens,
-        cost,
-      });
-
-      return {
-        isAIResponse: true,
-        model: responseBody.model,
-        usage,
-        costUsd: cost,
-      };
-    }
-
     // Anthropic Response Pattern
     if (responseBody.usage && responseBody.model && responseBody.type === 'message') {
       const usage: TokenUsage = {
@@ -76,6 +48,34 @@ export function detectAIResponse(responseBody: any): CostCalculation {
       );
 
       logger.debug('Anthropic response detected', {
+        model: responseBody.model,
+        tokens: usage.totalTokens,
+        cost,
+      });
+
+      return {
+        isAIResponse: true,
+        model: responseBody.model,
+        usage,
+        costUsd: cost,
+      };
+    }
+
+    // OpenAI Response Pattern
+    if (responseBody.usage && responseBody.model) {
+      const usage: TokenUsage = {
+        promptTokens: responseBody.usage.prompt_tokens || 0,
+        completionTokens: responseBody.usage.completion_tokens || 0,
+        totalTokens: responseBody.usage.total_tokens || 0,
+      };
+
+      const cost = calculateCost(
+        responseBody.model,
+        usage.promptTokens,
+        usage.completionTokens
+      );
+
+      logger.debug('OpenAI response detected', {
         model: responseBody.model,
         tokens: usage.totalTokens,
         cost,
