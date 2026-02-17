@@ -3,12 +3,15 @@
 
 import express, { Express } from 'express';
 import cors from 'cors';
+import { createServer } from 'http';
+import { Server as SocketIOServer } from 'socket.io';
 import { config, validateConfig } from './config/environment';
 import { testConnection } from './config/database';
 import { connectRedis } from './config/redis';
 import { requestLogger, errorLogger, notFoundHandler } from './middleware/requestLogger';
 import { logger } from './utils/logger';
 import { metricsHandler, metricsMiddleware } from './metrics/prometheus';
+import { startRealtimeGateway } from './services/realtimeGateway';
 
 // Import routes
 import proxyRouter from './routes/proxy';
@@ -79,7 +82,16 @@ export async function startServer(): Promise<void> {
     
     // Step 5: Start HTTP server
     const port = config.port;
-    app.listen(port, () => {
+    const httpServer = createServer(app);
+    const io = new SocketIOServer(httpServer, {
+      cors: {
+        origin: '*',
+      },
+    });
+
+    await startRealtimeGateway(io);
+
+    httpServer.listen(port, () => {
       logger.info(`🚀 API Gateway started successfully!`);
       logger.info(`📡 Server listening on port ${port}`);
       logger.info(`🌍 Environment: ${config.nodeEnv}`);
