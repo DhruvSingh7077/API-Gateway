@@ -5,6 +5,7 @@ on:
     workflows: ["CI"]
     types:
       - completed
+  workflow_dispatch:
 
 jobs:
   deploy:
@@ -16,8 +17,12 @@ jobs:
         uses: appleboy/ssh-action@v1.2.0
         with:
           host: ${{ secrets.EC2_HOST }}
+          port: 22
           username: ${{ secrets.EC2_USERNAME }}
           key: ${{ secrets.EC2_SSH_KEY }}
+          timeout: 120s
+          command_timeout: 30m
+          debug: true
           script_stop: true
           script: |
             set -e
