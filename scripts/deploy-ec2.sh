@@ -8,11 +8,11 @@ git reset --hard origin/main
 
 docker compose up -d
 
-npm install
+npm install --include=dev
 npm run build
 
 cd dashboard
-npm install
+npm install --include=dev
 npm run build
 cd ..
 
